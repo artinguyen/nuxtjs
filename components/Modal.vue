@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="updateModal">
+  <div class="modal fade" id="updateModal" ref="update">
     <div class="modal-dialog">
       <div class="modal-content">
       
@@ -126,3 +126,9 @@ export default {
   }
 }
 </script>
+<style>
+.show-modal {
+  display: block;
+  opacity: 1;
+}
+</style>

@@ -2,7 +2,6 @@
   <div class="container">
   <a href="#" @click="logout">Logout</a>
       <Table :list="list" />
-      <Modal />
       <Paging :count="count"/>
   </div>
 </template>

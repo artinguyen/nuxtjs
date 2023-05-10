@@ -17,6 +17,8 @@
 			</tr>
 			</tbody>
   	  	</table>
+  	  	<ModalUpdate ref="child" :user="user"/>
+
  	</div>
 </template>
 
@@ -27,18 +29,21 @@ export default {
    	data: function() {
   		return {
 		    user_id: '',
+		    user: {
+		    	username: '',
+		    	password: ''
+		    }
 		};
  	},
   	methods: {
 	    confirm(id) {
-	  		$("#myModal").modal();
+	  		this.$refs.child.$refs.delete.className += ' show-modal';
 	  		this.$store.commit('users/setDocId', id);
 	  	},
 	  	update(id, username, password) {
-	  		console.log(username, password)
-	  		$("#updateModal").modal();
-	  		$("input[name='username']").val(username);
-	  		$("input[name='password']").val(password);
+	  		this.$refs.child.$refs.update.className += ' show-modal';
+	  		this.user.username = username;
+	  		this.user.password = password;
 	  		this.$store.commit('users/setDocId', id);
 	  		//this.$store.commit('users/setPayload', {username, password});
 	  	},	
