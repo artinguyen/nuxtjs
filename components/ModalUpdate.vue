@@ -26,7 +26,7 @@
   </div>
 
 
-  <div class="modal fade" id="updateModal" ref="update">
+  <div class="modal fade" id="updateModal" ref="update" :class="show">
     <div class="modal-dialog">
       <div class="modal-content">
       
@@ -47,7 +47,7 @@
         <!-- Modal footer -->
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" @click="updateItem">Update</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal" @click="closeModal('update')">Cancel</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" @click="$emit('closeModal')">Cancel</button>
         </div>
         
       </div>
@@ -59,16 +59,17 @@
 <script>
 export default {
   	name: 'Modal',
-    props: ['user'],
+    props: ['user', 'show'],
     methods: {
-      closeModal(type) {
-        if(type == 'update') {
-          this.$refs.update.classList.remove("show-modal");
-        } else {
-          this.$refs.delete.classList.remove("show-modal");
-        }
+      // closeModal(type) {
+      //   //this.show = false;
+      //   if(type == 'update') {
+      //     //this.$refs.update.classList.remove("show-modal");
+      //   } else {
+      //     //this.$refs.delete.classList.remove("show-modal");
+      //   }
         
-      },
+      // },
       deleteItem() {
         this.closeModal('delete');
         const db = this.$fire.firestore;
@@ -99,7 +100,9 @@ export default {
           });
         }).then(() => {
             console.log("Transaction successfully committed!");
-            window.location.reload(true)
+            //window.location.reload(true)
+            this.getList();
+            this.closeModal('update');
         }).catch((error) => {
             console.log("Transaction failed: ", error);
         });

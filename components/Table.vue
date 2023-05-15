@@ -17,7 +17,7 @@
 			</tr>
 			</tbody>
   	  	</table>
-  	  	<ModalUpdate ref="child" :user="user"/>
+  	  	<ModalUpdate ref="child" :user="user" :show="classObject" @close-modal="closeModal"/>
 
  	</div>
 </template>
@@ -32,21 +32,31 @@ export default {
 		    user: {
 		    	username: '',
 		    	password: ''
+		    },
+		    classObject: {
+		      'show-modal': false,
 		    }
 		};
  	},
   	methods: {
 	    confirm(id) {
-	  		this.$refs.child.$refs.delete.className += ' show-modal';
+	  		//this.$refs.child.$refs.delete.className += ' show-modal';
 	  		this.$store.commit('users/setDocId', id);
+	  		this.classObject = { 'show-modal': true }
 	  	},
 	  	update(id, username, password) {
-	  		this.$refs.child.$refs.update.className += ' show-modal';
+	  		this.classObject = { 'show-modal': true }
+	  		//this.$refs.child.$refs.update.className += ' show-modal';
 	  		this.user.username = username;
 	  		this.user.password = password;
 	  		this.$store.commit('users/setDocId', id);
 	  		//this.$store.commit('users/setPayload', {username, password});
-	  	},	
+	  	},
+	  	closeModal() {
+	  		alert('abc')
+	    	this.classObject = { 'show-modal': false }
+        
+      },	
   	}
 }
 </script>
