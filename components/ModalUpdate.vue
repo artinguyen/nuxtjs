@@ -108,7 +108,7 @@ export default {
         });
       },
       getList() {
-        this.$store.commit('users/SET_LIST_DEFAULT');
+        this.$store.commit('users/setListDefault');
         const db = this.$fire.firestore;
         db.collection("users").orderBy('username').limit(2)
         .get()

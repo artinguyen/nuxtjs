@@ -9,10 +9,10 @@ export const mutations = {
   add(state, obj) {
     state.list.push(obj)
   },
-  SET_LIST_DEFAULT(state) {
+  setListDefault(state) {
     state.list = []
   },
-  SET_USER(state, user) {
+  setUser(state, user) {
         state.user = user
     },
   setDocId(state, id) {
@@ -43,15 +43,12 @@ export const getters = {
 };
 
 export const actions = {
-  setName({ commit }, newValue) {
-    commit("SET_USER_NAME", newValue);
-  },
   async onAuthStateChangedAction(state, { authUser, claims }) {
         if (!authUser) {
-            state.commit('SET_USER', null)
+            state.commit('setUser', null)
         } else {
             const { uid, email } = authUser
-            state.commit('SET_USER', {
+            state.commit('setUser', {
                 uid,
                 email,
             });

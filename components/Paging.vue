@@ -16,7 +16,7 @@ export default {
    	methods: {
 	    showPage(index) {
   		const db = this.$fire.firestore;
-      this.$store.commit('users/SET_LIST_DEFAULT');
+      this.$store.commit('users/setListDefault');
 	    var first = db.collection("users")
         .orderBy("username").get().then((documentSnapshots) => {
       // Get the last visible document

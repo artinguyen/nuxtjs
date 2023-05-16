@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-  <a href="#" @click="logout">Logout</a>
       <Table :list="list" />
       <Paging :count="count"/>
   </div>
@@ -57,10 +56,6 @@ export default {
    //      this.errorMessage = error.message;
    //    });
   	// },
-  	async logout() {
-      await this.$fire.auth.signOut();
-      this.$router.replace("/login");
-    },
   	getAll() {
   		const db = this.$fire.firestore;
 	  	db.collection("users").orderBy('username')
@@ -73,7 +68,7 @@ export default {
 	    });
   	},
   	getList() {
-    	this.$store.commit('users/SET_LIST_DEFAULT');
+    	this.$store.commit('users/setListDefault');
     	const db = this.$fire.firestore;
     	db.collection("users").orderBy('username').limit(2)
       .get()
