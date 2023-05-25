@@ -5,6 +5,9 @@
 
     <form>
 	  <input id="input-5" type="file"  @change="uploadFile" ref="file">
+    <input type="text" class="form-control" placeholder="Enter password" id="pwd" v-model="name">
+    <input type="text" class="form-control" placeholder="Enter password" id="pwd" v-model="price">
+    <input type="text" class="form-control" placeholder="Enter password" id="pwd" v-model="detail">
     <button @click.prevent="submitFile">Upload!</button>
     <button @click.prevent="add">Add</button>
 	</form>
@@ -24,11 +27,12 @@ export default {
   name: 'LoginPage',
   data: function() {
   	return {
-    		email: '',
-    		password: '',
-        base64: null,
+    		name: '',
+    		price: '',
+        base64: '',
         image: null,
-        items: []
+        items: [],
+        detail: ''
   		};
 	},
   	mounted() {
@@ -89,6 +93,7 @@ export default {
         this.base64 = event.target.result;
       }
       reader.readAsDataURL(this.image);
+      console.log(this.base64)
     },
     submitFile: function() {
      //const db = this.$fire.storage;
@@ -109,14 +114,18 @@ export default {
       console.log(this.base64)
     },
     add: function() {
+      var base64 = '';
+      if(this.base64 != '') {
+        base64 = this.base64.split(',')[1];
+      }
       
-      var base64 = this.base64.split(',')[1];
       // console.log(base64)
       // return false;
       const db = this.$fire.firestore;
       db.collection("products").add({
-    name: "Los Angeles1",
-    price: "CA",
+    name: this.name,
+    price: this.price,
+    detail: this.detail,
     image: base64
 })
 .then(() => {
