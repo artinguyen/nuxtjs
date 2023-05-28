@@ -12,7 +12,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css' }
+      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css' },
     ],
      script: [
       {
@@ -29,6 +29,9 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/css/bootstrap.min.css',
+    '~/assets/css/font-awesome.min.css',
+    '~/assets/css/style.css',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -65,7 +68,8 @@ export default {
           },
         ssr: true
         }, // Just as example. Can be any other service.
-          firestore: true
+          firestore: true,
+          storage: true,
         }
       }
     ]
@@ -76,5 +80,7 @@ export default {
   },
   router: {
     middleware : 'auth'
-  }
+  },
+  components: true,
+  loading: '~/components/LoadingBar.vue'
 }

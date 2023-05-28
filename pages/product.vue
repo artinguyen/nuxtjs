@@ -1,26 +1,11 @@
 <template>
-   <div class="container">
-   <Nuxt />
-   <h1>Login page</h1>
-
-    <form>
-	  <input id="input-5" type="file"  @change="uploadFile" ref="file">
-    <input type="text" class="form-control" placeholder="Enter password" id="pwd" v-model="name">
-    <input type="text" class="form-control" placeholder="Enter password" id="pwd" v-model="price">
-    <input type="text" class="form-control" placeholder="Enter password" id="pwd" v-model="detail">
-    <button @click.prevent="submitFile">Upload!</button>
-    <button @click.prevent="add">Add</button>
-	</form>
-
-
-
-
-<li v-for="item in items">
-  {{ item.name }} <img :src="'data:image/jpeg;base64,'+item.image">
-</li>
-  	</div>
-
-
+  <form class="col-md-4">
+    <input type="text" class="form-control" placeholder="Name" v-model="name">
+    <input type="text" class="form-control" placeholder="Price" v-model="price">
+    <input type="text" class="form-control" placeholder="Description" v-model="description">
+    <input id="input-5" type="file"  @change="uploadFile" ref="file">
+    <button @click.prevent="add">Add product</button>
+  </form>
 </template>
 <script>
 export default {
@@ -32,7 +17,7 @@ export default {
         base64: '',
         image: null,
         items: [],
-        detail: ''
+        description: ''
   		};
 	},
   	mounted() {
@@ -101,13 +86,6 @@ export default {
 
      const ref = this.$fire.storage.ref().child('some-child');
 
-  // [START storage_upload_string]
-  // Raw string is the default if no format is provided
-  // var message = 'This is my message.';
-  // ref.putString(message).then((snapshot) => {
-  //   console.log('Uploaded a raw string!');
-  // });
-
       ref.putString(this.base64, 'data_url').then((snapshot) => {
   console.log('Uploaded a base64 string!');
 });
@@ -125,7 +103,7 @@ export default {
       db.collection("products").add({
     name: this.name,
     price: this.price,
-    detail: this.detail,
+    description: this.description,
     image: base64
 })
 .then(() => {
@@ -139,3 +117,8 @@ export default {
   
 }
 </script>
+<style scoped>
+input, button {
+  margin-top: 10px;
+}
+</style>

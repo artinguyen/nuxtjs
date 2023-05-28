@@ -1,46 +1,33 @@
 <template>
-  <div class="container">
-
-<h3 class="h3">Shopping Demo-1 </h3>
-<h3 class="h3">Giỏ hàng <span 0>{{ amount }}</span></h3>
-    <div class="row">
-        <div class="col-md-3 col-sm-6" v-for="(product,key) in list" :key="key">
-
-            <div class="product-grid">
-                <div class="product-image">
-                    <a href="#">
-                        <img class="pic-1" :src="'data:image/jpeg;base64,'+product.info.image">
-                    </a>
-                    <ul class="social">
-                        <li><a href="" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
-                        <li><a href="" data-tip="Add to Wishlist"><i class="fa fa-shopping-bag"></i></a></li>
-                        <li><a href="" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
-                    </ul>
-                    <span class="product-new-label">Sale</span>
-                    <span class="product-discount-label">20%</span>
-                </div>
-                <div class="product-content">
-                    <h3 class="title"><a href="#">Women's Blouse</a></h3>
-                    <div class="price">$16.00
-                        <span>$20.00</span>
+  <section class="featured spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>List Product</h2>
                     </div>
-                    <a class="add-to-cart" href="" @click.prevent="addCart(product.id)">+ Add To Cart</a>
-                    <a class="add-to-cart" href="">+ More info</a>
                 </div>
             </div>
-            
+            <div class="row featured__filter">
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat" v-for="(product,key) in list" :key="key">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" :style="{ 'background-image': 'url(' + 'data:image/jpeg;base64,'+product.info.image + ')' }">
+                            <ul class="featured__item__pic__hover">
+                                <li><NuxtLink :to="`detail/${product.id}`"><i class="fa fa-heart"></i></NuxtLink></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart" @click.prevent="addCart(product)"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="#">{{ product.info.name }}</a></h6>
+                            <h5>{{ product.info.price }}</h5>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
         </div>
-        
-    </div>
-</div>
- 
-</div>
+    </section>
 </template>
-<style>
-a {
-  float: right;
-}
-</style>
 <script>
 export default {
   name: 'IndexPage',
@@ -58,6 +45,9 @@ export default {
   computed: {
    list () {
      return this.$store.state.products.list
+    },
+    cart() {
+      return this.$store.state.products.cart
     }
   },
   mounted() {
@@ -67,18 +57,20 @@ export default {
     console.log(this.list);
   },
   methods: {
-    addCart(id) {
-      
+    addCart(product) {
+      //console.log(product); return false;
       var check = false;
-      for (var i = 0; i < this.listId.length; i++) {
-        if(this.listId[i] == id) {
+      for (var i = 0; i < this.cart.length; i++) {
+        if(this.cart[i].id == product.id) {
           check = true;
           break;
         }
       }
       if(!check) {
-        this.listId.push(id);
-        this.amount = this.listId.length;
+        //this.listId.push(id);
+        product.quantity = 1;
+        this.$store.commit('products/setCart', product);
+        //this.amount = this.listId.length;
       }
 
       
